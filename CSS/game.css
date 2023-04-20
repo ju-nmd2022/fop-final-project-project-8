@@ -1,0 +1,53 @@
+*,
+*::before,
+*::after {
+  user-select: none;
+}
+
+body {
+  height: 900px;
+  background-image: linear-gradient(#f98ad8, #cc99ff);
+}
+
+#game-canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  border: 1px solid black;
+}
+
+.window {
+  overflow: hidden;
+}
+
+.score {
+  position: absolute;
+  font-size: 3vmin;
+  right: 1vmin;
+  top: 1vmin;
+}
+
+.start-screen {
+  position: absolute;
+  font-size: 5vmin;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hide {
+  display: none;
+}
+
+#background {
+  width: 70%;
+  height: auto;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translateX(-50%);
+  visibility: hidden;
+}
