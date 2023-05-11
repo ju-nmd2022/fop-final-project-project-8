@@ -37,6 +37,7 @@ body {
   height: auto;
   position: absolute;
   left: -15px;
+  z-index: -1;
 }
 
 #character {
@@ -45,11 +46,20 @@ body {
   width: 150px;
   height: auto;
   right: calc(100% - 150px);
+  z-index: 1;
 }
-
 
 #game {
   width: 100%;
   height: 100vh;
   position: relative;
+}
+
+.obstacles {
+  position: absolute;
+  bottom: 30px;
+  z-index: 3;
+  width: 75px;
+  height: auto;
+  right: 0;
 }
