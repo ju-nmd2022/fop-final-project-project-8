@@ -55,11 +55,14 @@ body {
   position: relative;
 }
 
-.obstacles {
-  position: absolute;
-  bottom: 30px;
-  z-index: 3;
-  width: 75px;
+.obstacle {
+  background-image: url(/img/bolt.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 40px;
   height: auto;
+  bottom: 30px;
   right: 0;
+  position: absolute;
 }

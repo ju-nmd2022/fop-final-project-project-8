@@ -14,10 +14,10 @@ let characterRight = parseInt(
   window.getComputedStyle(character).getPropertyValue("right")
 );
 let groundBottom = parseInt(
-  window.getComputedStyle(character).getPropertyValue("bottom")
+  window.getComputedStyle(ground).getPropertyValue("bottom")
 );
 let groundHeight = parseInt(
-  window.getComputedStyle(character).getPropertyValue("height")
+  window.getComputedStyle(ground).getPropertyValue("height")
 );
 
 let isJumping = false;
@@ -30,52 +30,60 @@ function jump() {
     if (characterBottom >= groundHeight + 100) {
       clearInterval(upTime);
       downTime = setInterval(() => {
-        if (characterBottom <= groundHeight - 110){
+        if (characterBottom <= groundHeight - 110) {
           clearInterval(downTime);
           isJumping = false;
         }
         characterBottom -= 10;
         character.style.bottom = characterBottom + "px";
-      }, 20);
+      }, 50);
     }
     characterBottom += 10;
     character.style.bottom = characterBottom + "px";
     isJumping = true;
-  }, 20);
+  }, 50);
 }
 
-function control(e){
+function generateObstacles() {
+  let obstacles = document.querySelector(".obstacles");
+  let obstacle = document.createElement("div");
+  obstacle.setAttribute("class", "obstacle");
+  obstacles.appendChild(obstacle);
+
+  let obstacleRight = -30;
+  let obstacleBottom = 50;
+  let obstacleWidth = 50;
+  let obstacleHeight = Math.floor(Math.random() * 60) + 60;
+
+  function moveObstacles() {
+    obstacleRight += 5;
+    obstacle.style.right = obstacleRight + "px";
+    obstacle.style.bottom = obstacleBottom + "px";
+    obstacle.style.width = obstacleWidth + "px";
+    obstacle.style.height = obstacleHeight + "px";
+
+    if (obstacleRight + obstacleWidth <= 0) {
+    clearInterval(obstacleInterval);
+    obstacles.removeChild(obstacle);
+
+}
+  }
+
+  let obstacleInterval = setInterval(moveObstacles, 50);
+  let obstacleTimeout = setTimeout(generateObstacles, 3500);
+}
+
+generateObstacles();
+
+function moveLeft()
+
+function control(e) {
   if (e.key == "ArrowUp" || e.key == "") {
     jump();
   }
 }
 
 document.addEventListener("keydown", control);
-
-function generateObstacles(){
-  let obstacles = document.querySelector("obstacles");
-  let obstacle = document.createElement("div");
-  obstacle.setAttribute("class", "obstacle");
-  obstacles.appendChild(obstacle);
-
-  let obstacleRight = -30;
-  let obstacleBottom = 100;
-  let obstacleWidth = 30;
-  let obstacleHeight = Math.floor(Math.random() * 50) + 50;
-
-  function moveObstacle(){
-    obstacleRight += 5;
-    obstacle.style.right = obstacleRight + "px";
-    obstacle.style.bottom = obstacleBottom + "px";
-    obstacle.style.width = obstacleWidth + "px";
-    obstacle.style.height = obstacleHeight + "px";
-  }
-
-  let obstacleInterval = setInterval(moveObstacle, 20);
-  let obstacleTimeout = setTimeout(generateObstacles, 1000);
-}
-
-generateObstacles();
 
 function startGame() {
   // Hide the start screen when the game starts
