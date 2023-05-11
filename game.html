@@ -8,13 +8,15 @@
     <title>Playing - Cloud Cruiser</title>
   </head>
   <body>
-    <canvas id="game"></canvas>
-    <div class="window">
-      <canvas id="game-canvas" width="800" height="600"></canvas>
-      <div class="score">0</div>
-      <div class="start-screen">Press Any Key To Start</div>
-      <!-- <img src="img/Background.png" id="background" /> -->
+    <div class="score">0</div>
+    <div class="start-screen">Press Any Key To Start</div>
+    <div><img class="ground" src="img/clouds.png" /></div>
+    <div><img id="character" src="unicorm-jump.svg" /></div>
+    <div>
+      <img class="obstacles" src="img/bolt.png" />
+      <img src="img/raincloud.png" />
     </div>
+
     <script src="/JS/game.js" defer type="module"></script>
   </body>
 </html>

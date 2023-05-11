@@ -1,52 +1,58 @@
-const canvas = document.getElementById("game-canvas");
-const ctx = canvas.getContext("2d");
+let character = document.getElementById("character");
+let ground = document.getElementById("ground");
+let characterBottom = parseInt(
+  window.getComputedStyle(character).getPropertyValue("bottom")
+);
+let characterHeight = parseInt(
+  window.getComputedStyle(character).getPropertyValue("height")
+);
+let characterWidth = parseInt(
+  window.getComputedStyle(character).getPropertyValue("width")
+);
+let characterRight = parseInt(
+  window.getComputedStyle(character).getPropertyValue("right")
+);
+let groundBottom = parseInt(
+  window.getComputedStyle(character).getPropertyValue("bottom")
+);
+let groundHeight = parseInt(
+  window.getComputedStyle(character).getPropertyValue("height")
+);
+let isJumping = false;
+let upTime;
+let downTime;
 
-const groundImage = new Image();
-groundImage.src = "img/clouds.png";
+function jump() {
+  if (isJumping) return;
+  upTime = setInterval(() => {
+    if (characterBottom >= groundHeight + 110) {
+      clearInterval(upTime);
+      downTime = setInterval(() => {
+        if (characterBottom <= groundHeight - 110){
+          clearInterval(downTime);
+          isJumping = false;
+        }
+        characterBottom -= 10;
+        character.style.bottom = characterBottom + "px";
+      }, 20);
+    }
+    characterBottom += 10;
+    character.style.bottom = characterBottom + "px";
+    isJumping = true;
+  }, 20);
+}
 
-let groundOffset = 0;
-let groundSpeed = 0.4;
-
-function drawGround() {
-  // Calculate the number of tiles needed to fill the width of the canvas
-  const numTiles = Math.ceil(canvas.width / groundImage.width);
-  
-  // Loop through each tile and draw it on the canvas
-  for (let i = 0; i < numTiles; i++) {
-    ctx.drawImage(
-      groundImage,
-      groundOffset + i * groundImage.width,
-      canvas.height - (groundImage.height * canvas.width * 6) / groundImage.width,
-      groundImage.width,
-      (groundImage.height * canvas.width * 6) / groundImage.width
-    );
-  }
-
-  // Move the ground to the left
-  groundOffset -= groundSpeed;
-  groundSpeed = groundSpeed + 0.001;
-
-  // If the ground has moved off the screen, reset its position
-  if (groundOffset < -groundImage.width) {
-    groundOffset = 0;
+function control(e){
+  if (e.key == "ArrowUp" || e.key == "") {
+    jump();
   }
 }
 
+document.addEventListener("keydown", control);
 
-function drawFrame() {
-  // Clear the canvas
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // Draw the ground
-  drawGround();
-
-  // Draw other game elements here
-
-  // Call this function again to draw the next frame
-  requestAnimationFrame(drawFrame);
+function generateObstacles(){
+  let obstacles = document.querySelector("obstacles");
 }
-
-drawFrame();
 
 function startGame() {
   // Hide the start screen when the game starts
@@ -57,5 +63,3 @@ function startGame() {
 // Call the startGame function when any key is pressed, only once
 document.addEventListener("keydown", startGame, { once: true });
 document.addEventListener("click", startGame, { once: true });
-// document.addEventListener("keydown", drawFrame, { once: true });
-// document.addEventListener("click", drawFrame, { once: true });
