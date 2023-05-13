@@ -19,10 +19,18 @@ let groundBottom = parseInt(
 let groundHeight = parseInt(
   window.getComputedStyle(ground).getPropertyValue("height")
 );
+let characterLeft = parseInt(
+  window.getComputedStyle(ground).getPropertyValue("left")
+);
 
 let isJumping = false;
 let upTime;
 let downTime;
+let leftTime;
+let rightTime;
+let isGoingLeft = false;
+let isGoingRight = false;
+let winWidth = parseInt(window.innerWidth);
 
 function jump() {
   if (isJumping) return;
@@ -44,38 +52,36 @@ function jump() {
   }, 50);
 }
 
-function generateObstacles() {
-  let obstacles = document.querySelector(".obstacles");
-  let obstacle = document.createElement("div");
-  obstacle.setAttribute("class", "obstacle");
-  obstacles.appendChild(obstacle);
+// function generateObstacles() {
+//   let obstacles = document.querySelector(".obstacles");
+//   let obstacle = document.createElement("div");
+//   obstacle.setAttribute("class", "obstacle");
+//   obstacles.appendChild(obstacle);
 
-  let obstacleRight = -30;
-  let obstacleBottom = 50;
-  let obstacleWidth = 50;
-  let obstacleHeight = Math.floor(Math.random() * 60) + 60;
+//   let obstacleRight = -30;
+//   let obstacleBottom = 50;
+//   let obstacleWidth = 50;
+//   let obstacleHeight = Math.floor(Math.random() * 60) + 60;
 
-  function moveObstacles() {
-    obstacleRight += 5;
-    obstacle.style.right = obstacleRight + "px";
-    obstacle.style.bottom = obstacleBottom + "px";
-    obstacle.style.width = obstacleWidth + "px";
-    obstacle.style.height = obstacleHeight + "px";
+//   function moveObstacles() {
+//     obstacleRight += 5;
+//     obstacle.style.right = obstacleRight + "px";
+//     obstacle.style.bottom = obstacleBottom + "px";
+//     obstacle.style.width = obstacleWidth + "px";
+//     obstacle.style.height = obstacleHeight + "px";
 
-    if (obstacleRight + obstacleWidth <= 0) {
-    clearInterval(obstacleInterval);
-    obstacles.removeChild(obstacle);
+//     if (obstacleRight + obstacleWidth <= 0) {
+//       clearInterval(obstacleInterval);
+//       obstacles.removeChild(obstacle);
+//     }
+//   }
 
-}
-  }
+//   let obstacleInterval = setInterval(moveObstacles, 50);
+//   let obstacleTimeout = setTimeout(generateObstacles, 3500);
+// }
 
-  let obstacleInterval = setInterval(moveObstacles, 50);
-  let obstacleTimeout = setTimeout(generateObstacles, 3500);
-}
+// generateObstacles();
 
-generateObstacles();
-
-function moveLeft()
 
 function control(e) {
   if (e.key == "ArrowUp" || e.key == "") {

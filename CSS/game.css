@@ -47,6 +47,7 @@ body {
   height: auto;
   right: calc(100% - 150px);
   z-index: 1;
+  left: 0;
 }
 
 #game {
