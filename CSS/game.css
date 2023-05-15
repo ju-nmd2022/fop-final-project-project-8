@@ -6,6 +6,12 @@
   touch-action: none;
 }
 
+* {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-weight: 200;
+  color: #0b1354;
+}
+
 body {
   height: 900px;
   background-image: linear-gradient(#f98ad8, #cc99ff);
@@ -32,22 +38,23 @@ body {
 }
 
 .ground {
-  bottom: -65px;
-  width: 1930px;
+  bottom: -50px;
+  width: 1300px;
   height: auto;
   position: absolute;
   left: -15px;
   z-index: -1;
+  right: 0;
 }
 
 #character {
   position: absolute;
   bottom: 30px;
-  width: 150px;
-  height: auto;
+  width: 100px;
   right: calc(100% - 150px);
   z-index: 1;
   left: 0;
+  background-color: aqua;
 }
 
 #game {
@@ -57,13 +64,12 @@ body {
 }
 
 .obstacle {
-  background-image: url(/img/bolt.png);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 40px;
-  height: auto;
+  /* background-image: url(/img/bolt.png); */
+  /* background-size: contain;
+  background-repeat: no-repeat; */
+  /* background-position: center; */
   bottom: 30px;
   right: 0;
   position: absolute;
+  background-color: black;
 }

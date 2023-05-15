@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/CSS/gameOver.css" />
+    <title>Game Over - Score</title>
+  </head>
+  <body>
+
+    <div class="container"><img id="headline" src="img/gameover.png" /></div>
+    <div id="score-container">
+      <h2>
+        <span id="score-text">Score:</span> <span id="score"></span>
+      </h2>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var score = localStorage.getItem("score");
+        var scoreElement = document.getElementById("score");
+        scoreElement.innerText = score;
+      });
+    </script>
+    
+    <div class="buttons">
+      <a href="game.html"
+        ><button id="again" onclick="playAgain()">Play Again!</button></a
+      >
+      <a href="index.html"><button id="exit">Exit</button></a>
+    </div>
+    <script>
+      function playAgain() {
+        localStorage.removeItem("score");
+        window.location.href = "game.html";
+      }
+      </script>
+  </body>
+</html>
