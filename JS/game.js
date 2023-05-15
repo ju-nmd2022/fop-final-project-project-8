@@ -25,9 +25,17 @@ let characterLeft = parseInt(
 let displayScore = document.getElementById("score");
 let score= 0;
 
+//variabler för jump
 let isJumping = false;
 let upTime;
 let downTime;
+
+//variabler för duck
+let isDucking = false;
+let duckTime;
+let raiseTime
+
+//andra variabler
 let leftTime;
 let rightTime;
 let isGoingLeft = false;
@@ -53,6 +61,16 @@ function jump() {
     character.style.bottom = characterBottom + "px";
     isJumping = true;
   }, 20);
+}
+
+function duck() {
+  setInterval(() => {
+    character.style.backgroundColor = "pink";
+    character.style.bottom = characterBottom + "px";
+    isDucking = true;
+  }, 20);
+  isDucking = false;
+  character.style.backgroundColor = "aqua";
 }
 
 function showScore(){
@@ -147,14 +165,16 @@ function generateObstacles() {
   let obstacleTimeout = setTimeout(generateObstacles, randomTimeout);
 }
 
+document.addEventListener("keydown", control);
 
 function control(e) {
-  if (e.key == "ArrowUp" || e.key == "") {
+  if (e.key === "ArrowUp" || e.key === "") {
     jump();
   }
+  if (e.key === "ArrowDown" || e.key === "") {
+    duck();
+  }
 }
-
-document.addEventListener("keydown", control);
 
 function startGame() {
   // Hide the start screen when the game starts
