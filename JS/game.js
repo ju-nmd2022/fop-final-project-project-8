@@ -29,6 +29,10 @@ let score= 0;
 let isJumping = false;
 let upTime;
 let downTime;
+let characterJump = document.getElementById("characterJump");
+characterJump.style.display = "none";
+let characterDuck = document.getElementById("characterDuck");
+characterDuck.style.display = "none";
 
 //variabler för duck
 let isDucking = false;
@@ -45,6 +49,8 @@ let winWidth = parseInt(window.innerWidth);
 
 function jump() {
   if (isJumping) return;
+  characterJump.style.display = "block";
+  characterStand.style.display = "none";
   upTime = setInterval(() => {
     if (characterBottom >= groundHeight + 100) {
       clearInterval(upTime);
@@ -52,6 +58,8 @@ function jump() {
         if (characterBottom <= groundHeight - 70) {
           clearInterval(downTime);
           isJumping = false;
+          characterStand.style.display = "block";
+          characterJump.style.display = "none";
         }
         characterBottom -= 10;
         character.style.bottom = characterBottom + "px";
@@ -64,14 +72,29 @@ function jump() {
 }
 
 function duck() {
-  setInterval(() => {
-    character.style.backgroundColor = "pink";
-    character.style.bottom = characterBottom + "px";
-    isDucking = true;
-  }, 20);
-  isDucking = false;
-  character.style.backgroundColor = "aqua";
+  // if (isDucking) return;
+  setTimeout(() => {
+    characterDuck.style.display = "block";
+    characterStand.style.display = "none";
+  }, 500);
+
+  // isDucking = false;
+  characterStand.style.display = "block";
+  characterDuck.style.display = "none";
 }
+
+// function duck() {
+//   setInterval(() => {
+//     characterDuck.style.display = "block";
+//     characterStand.style.display = "none";
+//     character.style.bottom = characterBottom + "px";
+//     isDucking = true;
+//   }, 20);
+//   isDucking = false;
+//   characterStand.style.display = "block";
+//   characterDuck.style.display = "none";
+//   character.style.backgroundColor = "aqua";
+// }
 
 function showScore(){
   score++;
