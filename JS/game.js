@@ -96,6 +96,7 @@ function duck() {
 //   character.style.backgroundColor = "aqua";
 // }
 
+//Show the score and make sure it is visible on Game Over screen by using localStorage
 function showScore(){
   score++;
   displayScore.innerText = score;
@@ -162,8 +163,8 @@ function generateObstacles() {
     obstacle.style.width = obstacleWidth + "px";
     obstacle.style.height = obstacleHeight + "px";
 
-    let offsetX = 10; // Example value, adjust as needed
-    let offsetY = 10; // Example value, adjust as needed
+    let offsetX = 10; 
+    let offsetY = 10; 
 
     // Check for collision using the modified hitbox values
     if (
@@ -171,14 +172,11 @@ function generateObstacles() {
       characterRight <= obstacleRight + obstacleWidth - offsetX &&
       characterBottom <= obstacleBottom + obstacleHeight - offsetY
     ) {
-      // alert("game over! Your score is: " + score);
       clearInterval(obstacleInterval);
       clearTimeout(obstacleTimeout);
       location.reload();
-
       // Save the score in local storage before redirecting
       localStorage.setItem("score", score);
-
       // Redirect to the score page
       window.location.href = "gameOver.html";
     }
