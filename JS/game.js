@@ -35,7 +35,6 @@ let characterDuck = document.getElementById("characterDuck");
 characterDuck.style.display = "none";
 
 //variabler för duck
-let isDucking = false;
 let duckTime;
 let raiseTime
 
@@ -72,29 +71,15 @@ function jump() {
 }
 
 function duck() {
-  // if (isDucking) return;
+  //byter till duck
+  characterDuck.style.display = "block";
+  characterStand.style.display = "none";
+  //byter tillbaka till stand efter 0.5 sek
   setTimeout(() => {
-    characterDuck.style.display = "block";
-    characterStand.style.display = "none";
-  }, 500);
-
-  // isDucking = false;
-  characterStand.style.display = "block";
-  characterDuck.style.display = "none";
+    characterStand.style.display = "block";
+    characterDuck.style.display = "none";
+    }, 500);
 }
-
-// function duck() {
-//   setInterval(() => {
-//     characterDuck.style.display = "block";
-//     characterStand.style.display = "none";
-//     character.style.bottom = characterBottom + "px";
-//     isDucking = true;
-//   }, 20);
-//   isDucking = false;
-//   characterStand.style.display = "block";
-//   characterDuck.style.display = "none";
-//   character.style.backgroundColor = "aqua";
-// }
 
 //Show the score and make sure it is visible on Game Over screen by using localStorage
 function showScore(){
