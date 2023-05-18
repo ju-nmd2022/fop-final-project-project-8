@@ -26,6 +26,7 @@ width: 50%;
   align-items: center;
   height: 15vh; 
   gap: 5px;
+  margin-top: 40px;
 }
 
 #again{
@@ -34,7 +35,7 @@ width: 50%;
     background-color:#ffffff;
     border: 10px;
     color: #f98ad8;
-    font-size: 30px;
+    font-size: 40px;
     border: 2px solid rgb(138, 81, 149);
     margin-left: 85px;
 }
@@ -69,7 +70,7 @@ width: 50%;
 }
 
 #score-container h2 {
-  font-size: 25px;
+  font-size: 35px;
   color: rgb(138, 81, 149);
   display: flex;
   align-items: center;
