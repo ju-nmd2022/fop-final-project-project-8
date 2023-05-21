@@ -10,6 +10,7 @@
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   font-weight: 200;
   color: #0b1354;
+  overflow: hidden;
 }
 
 body {

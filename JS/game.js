@@ -1,4 +1,5 @@
-let character = document.getElementById("character");
+let characterStand = document.getElementById("characterStand");
+characterStand.style.display = "block";
 let ground = document.getElementById("ground");
 
 let characterBottom = parseInt(
@@ -45,6 +46,8 @@ let isGoingLeft = false;
 let isGoingRight = false;
 let winWidth = parseInt(window.innerWidth);
 
+// let index;
+
 function jump() {
   if (isJumping) return;
   characterJump.style.display = "block";
@@ -69,15 +72,15 @@ function jump() {
   }, 20);
 }
 
-function duck() {
-  //byter till duck
-  characterDuck.style.display = "block";
-  characterStand.style.display = "none";
-  //byter tillbaka till stand efter 0.5 sek
-  setTimeout(() => {
+
+function stopDuck() {
     characterStand.style.display = "block";
     characterDuck.style.display = "none";
-    }, 1000);
+}
+
+function duck() {
+  characterStand.style.display = "none";
+  characterDuck.style.display = "block";
 }
 
 //Show the score and make sure it is visible on Game Over screen by using localStorage
@@ -87,10 +90,17 @@ function showScore() {
   localStorage.setItem("score", score);
 }
 
+let gameSpeed = 30
+function setSpeed() {
+  setInterval(() => {
+    gameSpeed = gameSpeed - 1;
+    console.log(gameSpeed);
+  }, 3000);
+}
+
 let bolt = false;
 
 function generateObstacles() {
-
   let obstacles = document.querySelector(".obstacles");
   let obstacle = document.createElement("div");
   obstacle.setAttribute("class", "obstacle");
@@ -103,7 +113,6 @@ function generateObstacles() {
   let obstacleHeight = Math.floor(Math.random() * 50) + 50;
 
   function moveObstacles() {
-    bolt = true;
     obstacleRight = obstacleRight + 5;
     obstacle.style.right = obstacleRight + "px";
     obstacle.style.bottom = obstacleBottom + "px";
@@ -136,7 +145,7 @@ function generateObstacles() {
     }
   }
 
-  let obstacleInterval = setInterval(moveObstacles, 30);
+  let obstacleInterval = setInterval(moveObstacles, gameSpeed);
   let obstacleTimeout = setTimeout(generateObstacles, randomTimeout);
 }
 
@@ -179,30 +188,55 @@ function generateObstacleTwo() {
     }
   }
 
-  let obstacleIntervalTwo = setInterval(moveObstaclesTwo, 35);
+  let obstacleIntervalTwo = setInterval(moveObstaclesTwo, gameSpeed);
   let obstacleTimeoutTwo = setTimeout(generateObstacleTwo, randomTimeoutTwo);
 }
 
-
-document.addEventListener("keydown", control);
-
-function control(e) {
+document.addEventListener("keydown", function control(e){
   if (e.key === "ArrowUp" || e.key === "") {
     jump();
   }
-  if (e.key === "ArrowDown" || e.key === "") {
+  if (e.key === "ArrowDown") {
     duck();
   }
+});
+
+document.addEventListener("keyup", function control(e){
+  if (e.key === "ArrowDown") {
+    stopDuck();
+  }
+});
+
+//obNum = obstable Number
+let obNum = 0;
+
+function whichOb() {
+  setInterval(() => {
+    obNum = (Math.floor(Math.random() * 2));
+    console.log(obNum);
+  }, 3000);
 }
 
-function startGame() {
+function startGame() {  
+  setSpeed();
+  whichOb();
+
   // Hide the start screen when the game starts
   const startScreen = document.querySelector(".start-screen");
   startScreen.style.display = "none";
-  generateObstacles();
-  generateObstacleTwo();
+  if (obNum === 1) {
+    generateObstacles();
+  } else if (obNum === 0) {
+    generateObstacleTwo();
+  }
+  // generateObstacles();
+  // generateObstacleTwo();
   setInterval(showScore, 100);
 
+  //typ något sånt här lär det ju vara om man ska ha ett hem
+  if (score >= 1000) {
+    alert("you win!");
+  }
 }
 
 // Call the startGame function when any key is pressed, only once
