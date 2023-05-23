@@ -162,11 +162,12 @@ function generateObstacle() {
           clearTimeout(obstacleTimeout);
           location.reload();
           localStorage.setItem("score", score);
+          // Redirect to the gameOver page
+          window.location.href = "gameOver.html";
         }
       }
     }
-
-    // Check for collision using the modified hitbox values
+    
     if (obstacleImage === "img/bolt.png") {
       if (
         characterRight >= obstacleRight - obstacleWidth &&
@@ -180,7 +181,7 @@ function generateObstacle() {
         localStorage.setItem("score", score);
 
         // Redirect to the gameOver page
-        // window.location.href = "gameOver.html";
+        window.location.href = "gameOver.html";
       }
     }
   }
@@ -189,20 +190,6 @@ function generateObstacle() {
   let obstacleTimeout = setTimeout(generateObstacle, randomTimeout);
 }
 
-//     // Check for collision using the modified hitbox values
-//     if (
-//       characterRight >= obstacleRight - obstacleWidth - 20 &&
-//       characterRight <= obstacleRight - 20 &&
-//       characterBottom <= obstacleBottom + obstacleHeight
-//     ) {
-
-//     if (
-//       characterRight >= obstacleTwoRight - obstacleTwoWidth &&
-//       characterRight <= obstacleTwoRight &&
-//       characterBottom <= obstacleTwoBottom + obstacleTwoHeight - 130 &&
-//       (characterDuck.style.display === "none" ||
-//         characterBottom > obstacleTwoBottom + obstacleTwoHeight - 130)
-//     ) {
 
 document.addEventListener("keydown", function (e) {
   if (e.key === "ArrowUp") {
