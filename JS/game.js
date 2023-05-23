@@ -36,6 +36,7 @@ let characterDuck = document.getElementById("characterDuck");
 characterDuck.style.display = "none";
 
 //variabler för duck
+let isDucking = false;
 let duckTime;
 let raiseTime;
 
@@ -45,8 +46,6 @@ let rightTime;
 let isGoingLeft = false;
 let isGoingRight = false;
 let winWidth = parseInt(window.innerWidth);
-
-// let index;
 
 function jump() {
   if (isJumping) return;
@@ -72,15 +71,18 @@ function jump() {
   }, 20);
 }
 
-
-function stopDuck() {
-    characterStand.style.display = "block";
-    characterDuck.style.display = "none";
+function stand() {
+  characterStand.style.display = "block";
+  characterDuck.style.display = "none";
+  isDucking = false;
 }
 
 function duck() {
-  characterStand.style.display = "none";
-  characterDuck.style.display = "block";
+  if (!isJumping) {
+    characterStand.style.display = "none";
+    characterDuck.style.display = "block";
+    isDucking = true;
+  }
 }
 
 //Show the score and make sure it is visible on Game Over screen by using localStorage
@@ -90,7 +92,7 @@ function showScore() {
   localStorage.setItem("score", score);
 }
 
-let gameSpeed = 30
+let gameSpeed = 30;
 function setSpeed() {
   setInterval(() => {
     gameSpeed = gameSpeed - 1;
@@ -98,9 +100,7 @@ function setSpeed() {
   }, 3000);
 }
 
-let bolt = false;
-
-function generateObstacles() {
+function generateObstacle() {
   let obstacles = document.querySelector(".obstacles");
   let obstacle = document.createElement("div");
   obstacle.setAttribute("class", "obstacle");
@@ -110,145 +110,162 @@ function generateObstacles() {
   let obstacleRight = -30;
   let obstacleBottom = 50;
   let obstacleWidth = 30;
-  let obstacleHeight = Math.floor(Math.random() * 50) + 50;
 
-  function moveObstacles() {
+  // Define an array of obstacle images
+  let obstacleImages = ["img/bolt.png", "img/raincloud.png"];
+
+  // Randomly select an obstacle image
+  let randomIndex = Math.floor(Math.random() * obstacleImages.length);
+  let obstacleImage = obstacleImages[randomIndex];
+
+  // Adjust the obstacle height based on the selected image
+  let obstacleHeight;
+  if (obstacleImage === "img/bolt.png") {
+    obstacleHeight = Math.floor(Math.random() * 50) + 50;
+  } else if (obstacleImage === "img/raincloud.png") {
+    obstacleHeight = 300;
+  }
+
+  obstacle.style.backgroundImage = `url('${obstacleImage}')`;
+  obstacle.style.right = obstacleRight + "px";
+  obstacle.style.bottom = obstacleBottom + "px";
+  obstacle.style.width = obstacleWidth + "px";
+  obstacle.style.height = obstacleHeight + "px";
+
+  //make image bigger, only rauncloud
+  if (obstacleImage === "img/raincloud.png") {
+    let scale = 3; // Adjust this value to change the size/scale
+    obstacle.style.backgroundSize = `contain`;
+    obstacle.style.transform = `scale(${scale})`;
+  }
+
+  function moveObstacle() {
     obstacleRight = obstacleRight + 5;
     obstacle.style.right = obstacleRight + "px";
-    obstacle.style.bottom = obstacleBottom + "px";
-    obstacle.style.width = obstacleWidth + "px";
-    obstacle.style.height = obstacleHeight + "px";
+
+    if (obstacleImage === "img/raincloud.png") {
+      let raincloudTop = obstacleBottom;
+      let raincloudBottom = obstacleBottom + obstacleHeight;
+      let raincloudLeft = obstacleRight - obstacleWidth;
+      let raincloudRight = obstacleRight;
+
+      if (!isDucking) {
+        // Check collision only if the character is not ducking
+        if (
+          characterRight >= raincloudLeft &&
+          characterRight <= raincloudRight &&
+          characterBottom + characterHeight >= raincloudTop &&
+          characterBottom <= raincloudBottom
+        ) {
+          // Collision occurred, handle the logic here
+          clearInterval(obstacleInterval);
+          clearTimeout(obstacleTimeout);
+          location.reload();
+          localStorage.setItem("score", score);
+        }
+      }
+    }
 
     // Check for collision using the modified hitbox values
-    if (
-      characterRight >= obstacleRight - obstacleWidth - 20 &&
-      characterRight <= obstacleRight - 20 &&
-      characterBottom <= obstacleBottom + obstacleHeight
-    ) {
-      console.log(
-        characterLeft,
-        characterRight,
-        obstacleRight,
-        obstacleWidth,
-        characterBottom,
-        obstacleBottom,
-        obstacleHeight
-      );
-      clearInterval(obstacleInterval);
-      clearTimeout(obstacleTimeout);
-      location.reload();
-      // Save the score in local storage before redirecting
-      localStorage.setItem("score", score);
-      // Redirect to the gameOver page
-      // alert("game over");
-      // window.location.href = "gameOver.html";
+    if (obstacleImage === "img/bolt.png") {
+      if (
+        characterRight >= obstacleRight - obstacleWidth &&
+        characterRight <= obstacleRight - 20 &&
+        characterBottom <= obstacleBottom + obstacleHeight
+      ) {
+        clearInterval(obstacleInterval);
+        clearTimeout(obstacleTimeout);
+        location.reload();
+        // Save the score in local storage before redirecting
+        localStorage.setItem("score", score);
+
+        // Redirect to the gameOver page
+        // window.location.href = "gameOver.html";
+      }
     }
   }
 
-  let obstacleInterval = setInterval(moveObstacles, gameSpeed);
-  let obstacleTimeout = setTimeout(generateObstacles, randomTimeout);
+  let obstacleInterval = setInterval(moveObstacle, gameSpeed);
+  let obstacleTimeout = setTimeout(generateObstacle, randomTimeout);
 }
 
-let cloud = false;
+//     // Check for collision using the modified hitbox values
+//     if (
+//       characterRight >= obstacleRight - obstacleWidth - 20 &&
+//       characterRight <= obstacleRight - 20 &&
+//       characterBottom <= obstacleBottom + obstacleHeight
+//     ) {
 
-function generateObstacleTwo() {
-  let obstaclesTwo = document.querySelector(".obstaclesTwo");
-  let obstacleTwo = document.createElement("div");
-  obstacleTwo.setAttribute("class", "obstacleTwo");
-  obstaclesTwo.appendChild(obstacleTwo);
+//     if (
+//       characterRight >= obstacleTwoRight - obstacleTwoWidth &&
+//       characterRight <= obstacleTwoRight &&
+//       characterBottom <= obstacleTwoBottom + obstacleTwoHeight - 130 &&
+//       (characterDuck.style.display === "none" ||
+//         characterBottom > obstacleTwoBottom + obstacleTwoHeight - 130)
+//     ) {
 
-  let randomTimeoutTwo = Math.floor(Math.random() * 4000) + 5000;
-  let obstacleTwoRight = -30;
-  let obstacleTwoBottom = 130;
-  let obstacleTwoWidth = 130;
-  let obstacleTwoHeight = Math.floor(Math.random() * 70) + 60;
-
-  function moveObstaclesTwo() {
-    cloud = true;
-    obstacleTwoRight = obstacleTwoRight + 5;
-    obstacleTwo.style.right = obstacleTwoRight + "px";
-    obstacleTwo.style.bottom = obstacleTwoBottom + "px";
-    obstacleTwo.style.width = obstacleTwoWidth + "px";
-    obstacleTwo.style.height = obstacleTwoHeight + "px";
-
-  
-    if (
-      characterRight >= obstacleTwoRight - obstacleTwoWidth &&
-      characterRight <= obstacleTwoRight  &&
-      characterBottom <= obstacleTwoBottom + obstacleTwoHeight -130
-    ) {
-      clearInterval(obstacleIntervalTwo);
-      clearTimeout(obstacleTimeoutTwo);
-      location.reload();
-
-      // Save the score in local storage before redirecting
-      localStorage.setItem("score", score);
-      // Redirect to the gameOver page
-      // window.location.href = "gameOver.html";
-    }
-  }
-
-  let obstacleIntervalTwo = setInterval(moveObstaclesTwo, gameSpeed);
-  let obstacleTimeoutTwo = setTimeout(generateObstacleTwo, randomTimeoutTwo);
-}
-
-document.addEventListener("keydown", function control(e){
-  if (e.key === "ArrowUp" || e.key === "") {
+document.addEventListener("keydown", function (e) {
+  if (e.key === "ArrowUp") {
     jump();
-  }
-  if (e.key === "ArrowDown") {
+  } else if (e.key === "ArrowDown") {
     duck();
   }
 });
 
-document.addEventListener("keyup", function control(e){
+document.addEventListener("keyup", function (e) {
   if (e.key === "ArrowDown") {
-    stopDuck();
+    stand();
   }
 });
+
+// document.addEventListener("keydown", function control(e) {
+//   if (e.key === "ArrowUp" || e.key === "") {
+//     jump();
+//   }
+//   if (e.key === "ArrowDown") {
+//     duck();
+//   }
+// });
+
+// document.addEventListener("keyup", function control(e) {
+//   if (e.key === "ArrowDown") {
+//     stopDuck();
+//   }
+// });
 
 //obNum = obstable Number
 let obNum = 0;
 
 function whichOb() {
   setInterval(() => {
-    obNum = (Math.floor(Math.random() * 2));
+    obNum = Math.floor(Math.random() * 2);
     console.log(obNum);
   }, 3000);
 }
 
-function startGame() {  
+function startGame() {
   setSpeed();
-  whichOb();
-
-  // Hide the start screen when the game starts
-  const startScreen = document.querySelector(".start-screen");
-  startScreen.style.display = "none";
-  if (obNum === 1) {
-    generateObstacles();
-  } else if (obNum === 0) {
-    generateObstacleTwo();
-  }
-  // generateObstacles();
-  // generateObstacleTwo();
+  generateObstacle();
   setInterval(showScore, 100);
 
-  //typ något sånt här lär det ju vara om man ska ha ett hem
-  if (score >= 1000) {
-    alert("you win!");
-  }
+  //   if (score >= 1000) {
+  //     alert("You win!");
+  //   whichOb();
+
+  //   // Hide the start screen when the game starts
+  const startScreen = document.querySelector(".start-screen");
+  startScreen.style.display = "none";
 }
 
 // Call the startGame function when any key is pressed, only once
-// document.addEventListener("keydown", startGame, { once: true });
 document.addEventListener(
   "keydown",
-  (e) => {
-    if (e.key === "ArrowUp") {
-      startGame();
-    }
+  function (e) {
+    startGame();
   },
   { once: true }
 );
 
+//SOURCES
 //https://www.youtube.com/watch?v=a0TyCnFgqlk&list=PLgWOzydYBbG5_EL78twae4-FTLITTz_hG&index=6
+//ChatGPT
