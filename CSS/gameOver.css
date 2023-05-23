@@ -1,32 +1,42 @@
 * {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   user-select: none;
+  margin: 0%;
 }
 
 body {
   height: 900px;
   background-image: linear-gradient(#f98ad8, #cc99ff);
   overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 
+  "left right";
 }
 
 #headline{
-width: 50%;
+  width: 100%;
+  /* grid-area: left; */
+  margin-bottom: 100px;
+  margin-left: 50px;
+  margin-top: -150px;
 }
 
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50vh; 
+  justify-self: center;
+  align-self: center;
+  grid-area: left;
 }
 
 .buttons{
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 15vh; 
+  /* height: 150px;  */
   gap: 5px;
   margin-top: 40px;
+  grid-area: left;
+  margin-left: 50px;
 }
 
 #again{
@@ -37,7 +47,6 @@ width: 50%;
     color: #f98ad8;
     font-size: 40px;
     border: 2px solid rgb(138, 81, 149);
-    margin-left: 85px;
 }
 
 #exit{
@@ -52,30 +61,85 @@ width: 50%;
 #again:hover{
     background-color: #1a5ca8;
     color: white;
-    border: none;
+    border-color:#1a5ca8;
 }
 
 #exit:hover{
     background-color: #1a5ca8;
     color: white;
-    border: none;
+    border-color:#1a5ca8;
 }
 
-#score-container {
+/* #score-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 5vh;
   margin-top: -30px;
-}
+} */
 
-#score-container h2 {
+#score-container {
   font-size: 35px;
   color: rgb(138, 81, 149);
   display: flex;
-  align-items: center;
+  justify-content: center;
+  grid-area: left;
+  margin-left: 50px;
 }
 
-#score-text {
-  margin-right: 10px; /* Adjust the margin as needed */
+/* #score-text {
+  margin-right: 10px;
+} */
+
+
+
+
+
+/* .leaderboard {
+  display: flex;
+  justify-content: center;
+  background-color: #1a5ca8;
+} */
+
+.leaderboard {
+  /* display: grid; */
+  width: 50%;
+  justify-self: center;
+  align-self: center;
+  text-align: center;
+  font-size: 1.5em;
+  grid-area: right;
+}
+
+
+#input,#button {
+  margin: 10px;
+  font-size: 20px;
+  border-radius: 10px;
+  padding: 5px;
+  background-color:#ffffff;
+  border: 10px;
+  color: #f98ad8;
+  border: 2px solid rgb(138, 81, 149);
+}
+
+#button:hover{
+  background-color: #1a5ca8;
+  color: white;
+  border-color:#1a5ca8;
+}
+
+
+#names {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color:white;
+  border-radius: 10px;
+  width: 100%;
+  justify-self: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+span {
+  margin: 20px;
 }

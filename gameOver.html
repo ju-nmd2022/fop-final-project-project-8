@@ -8,37 +8,42 @@
     <title>Game Over - Score</title>
   </head>
   <body>
-
-    <div class="container"><img id="headline" src="img/gameover.png" /></div>
-    <div id="score-container">
-      <h2>
-        <span id="score-text">Score:</span> <span id="score"></span>
-      </h2>
+    <div class="container">
+      <img id="headline" src="img/gameover.png" />
+      <div id="score-container">
+        <h2>
+          <span id="score-text">Score:</span> <span id="score"></span>
+        </h2>
+      </div>
+      <div class="buttons">
+        <a href="game.html"
+          ><button id="again" onclick="playAgain()">Play Again!</button></a
+        >
+        <a href="index.html"><button id="exit">Exit</button></a>
+      </div>
+      <script>
+        function playAgain() {
+          localStorage.removeItem("score");
+          window.location.href = "game.html";
+        }
+        </script>
     </div>
-    <script>
+    <!-- <script>
       document.addEventListener("DOMContentLoaded", function () {
         var score = localStorage.getItem("score");
         var scoreElement = document.getElementById("score");
         scoreElement.innerText = score;
       });
-    </script>
+    </script> -->
 
     <div class="leaderboard">
-      
-
+      <div>
+        <input id="input" type="text" placeholder="Name...">
+        <button id="button">Save</button>
+      </div>
+      <p>Top 5:</p>
+      <div id="names"></div>
     </div>
-    
-    <div class="buttons">
-      <a href="game.html"
-        ><button id="again" onclick="playAgain()">Play Again!</button></a
-      >
-      <a href="index.html"><button id="exit">Exit</button></a>
-    </div>
-    <script>
-      function playAgain() {
-        localStorage.removeItem("score");
-        window.location.href = "game.html";
-      }
-      </script>
+      <script src="/JS/leaderboard.js" defer></script>
   </body>
 </html>

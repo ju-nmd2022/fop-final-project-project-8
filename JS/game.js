@@ -141,7 +141,7 @@ function generateObstacles() {
       localStorage.setItem("score", score);
       // Redirect to the gameOver page
       // alert("game over");
-      // window.location.href = "gameOver.html";
+      window.location.href = "gameOver.html";
     }
   }
 
@@ -184,7 +184,7 @@ function generateObstacleTwo() {
       // Save the score in local storage before redirecting
       localStorage.setItem("score", score);
       // Redirect to the gameOver page
-      // window.location.href = "gameOver.html";
+      window.location.href = "gameOver.html";
     }
   }
 
