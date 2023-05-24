@@ -21,7 +21,7 @@ body {
 
 .score {
   position: absolute;
-  font-size: 3vmin;
+  font-size: 70px;
   right: 1vmin;
   top: 1vmin;
 }
@@ -40,7 +40,7 @@ body {
 
 .ground {
   bottom: -50px;
-  width: 1300px;
+  width: 100%;
   height: auto;
   position: absolute;
   left: -15px;
@@ -55,9 +55,12 @@ body {
   right: calc(100% - 150px);
   z-index: 1;
   left: 0;
-  /* background-color: aqua; */
 }
 
+#characterDuck {
+  margin-bottom: -20px;
+  width: 100px;
+}
 
 #game {
   width: 100%;

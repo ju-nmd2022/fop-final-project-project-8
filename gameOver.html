@@ -21,20 +21,7 @@
         >
         <a href="index.html"><button id="exit">Exit</button></a>
       </div>
-      <script>
-        function playAgain() {
-          localStorage.removeItem("score");
-          window.location.href = "game.html";
-        }
-        </script>
     </div>
-    <!-- <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var score = localStorage.getItem("score");
-        var scoreElement = document.getElementById("score");
-        scoreElement.innerText = score;
-      });
-    </script> -->
 
     <div class="leaderboard">
       <div>
@@ -44,6 +31,6 @@
       <p>Top 5:</p>
       <div id="names"></div>
     </div>
-      <script src="/JS/leaderboard.js" defer></script>
+      <script src="/JS/gameover.js" defer></script>
   </body>
 </html>

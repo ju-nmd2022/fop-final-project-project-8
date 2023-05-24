@@ -2,6 +2,7 @@ let characterStand = document.getElementById("characterStand");
 characterStand.style.display = "block";
 let ground = document.getElementById("ground");
 
+//get properties for character & ground?
 let characterBottom = parseInt(
   window.getComputedStyle(character).getPropertyValue("bottom")
 );
@@ -23,39 +24,40 @@ let groundHeight = parseInt(
 let characterLeft = parseInt(
   window.getComputedStyle(ground).getPropertyValue("left")
 );
+
+//score
 let displayScore = document.getElementById("score");
 let score = 0;
 
-//variabler för jump
+//variables for jump
 let isJumping = false;
 let upTime;
 let downTime;
 let characterJump = document.getElementById("characterJump");
 characterJump.style.display = "none";
+
+//variables for jduck
+let isDucking = false;
 let characterDuck = document.getElementById("characterDuck");
 characterDuck.style.display = "none";
 
-//variabler för duck
-let isDucking = false;
-let duckTime;
-let raiseTime;
-
-//andra variabler
-let leftTime;
-let rightTime;
-let isGoingLeft = false;
-let isGoingRight = false;
+//används detta?
 let winWidth = parseInt(window.innerWidth);
 
+//function to get character to jump
 function jump() {
   if (isJumping) return;
+  //displays correct img
   characterJump.style.display = "block";
   characterStand.style.display = "none";
+  //the actual jump
   upTime = setInterval(() => {
     if (characterBottom >= groundHeight + 100) {
+      //whar happends when in air
       clearInterval(upTime);
       downTime = setInterval(() => {
         if (characterBottom <= groundHeight - 70) {
+          //what happens when on ground
           clearInterval(downTime);
           isJumping = false;
           characterStand.style.display = "block";
@@ -71,12 +73,14 @@ function jump() {
   }, 20);
 }
 
+//function to get character back to stand
 function stand() {
   characterStand.style.display = "block";
   characterDuck.style.display = "none";
   isDucking = false;
 }
 
+//function to get character to duck
 function duck() {
   if (!isJumping) {
     characterStand.style.display = "none";
@@ -92,13 +96,15 @@ function showScore() {
   localStorage.setItem("score", score);
 }
 
+//decides how fast game is and makes it faster as time goes
 let gameSpeed = 30;
 function setSpeed() {
   setInterval(() => {
-    gameSpeed = gameSpeed - 1;
+    gameSpeed = gameSpeed - 2;
     console.log(gameSpeed);
   }, 3000);
 }
+
 
 function generateObstacle() {
   let obstacles = document.querySelector(".obstacles");
@@ -106,7 +112,7 @@ function generateObstacle() {
   obstacle.setAttribute("class", "obstacle");
   obstacles.appendChild(obstacle);
 
-  let randomTimeout = Math.floor(Math.random() * 2000) + 2000;
+  let randomTimeout = Math.floor(Math.random() * (-80 * (-1 * gameSpeed))+ 1500);
   let obstacleRight = -30;
   let obstacleBottom = 50;
   let obstacleWidth = 30;
@@ -190,7 +196,7 @@ function generateObstacle() {
   let obstacleTimeout = setTimeout(generateObstacle, randomTimeout);
 }
 
-
+//controls
 document.addEventListener("keydown", function (e) {
   if (e.key === "ArrowUp") {
     jump();
@@ -198,48 +204,20 @@ document.addEventListener("keydown", function (e) {
     duck();
   }
 });
-
+//controls again
 document.addEventListener("keyup", function (e) {
   if (e.key === "ArrowDown") {
     stand();
   }
 });
 
-// document.addEventListener("keydown", function control(e) {
-//   if (e.key === "ArrowUp" || e.key === "") {
-//     jump();
-//   }
-//   if (e.key === "ArrowDown") {
-//     duck();
-//   }
-// });
-
-// document.addEventListener("keyup", function control(e) {
-//   if (e.key === "ArrowDown") {
-//     stopDuck();
-//   }
-// });
-
-//obNum = obstable Number
-let obNum = 0;
-
-function whichOb() {
-  setInterval(() => {
-    obNum = Math.floor(Math.random() * 2);
-    console.log(obNum);
-  }, 3000);
-}
-
+//the function taht startes the game
 function startGame() {
   setSpeed();
   generateObstacle();
   setInterval(showScore, 100);
 
-  //   if (score >= 1000) {
-  //     alert("You win!");
-  //   whichOb();
-
-  //   // Hide the start screen when the game starts
+// Hide the start screen when the game starts
   const startScreen = document.querySelector(".start-screen");
   startScreen.style.display = "none";
 }
