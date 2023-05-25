@@ -9,22 +9,26 @@ body {
   background-image: linear-gradient(#f98ad8, #cc99ff);
   overflow: hidden;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   grid-template-areas: 
-  "left right";
+  "top" 
+  "bottom";
 }
 
 #headline{
-  width: 100%;
-  margin-bottom: 100px;
-  margin-left: 50px;
-  margin-top: -150px;
+ margin-left: 50%;
+ margin-right: 50%;
+  width: 50%;
 }
 
 .container {
   justify-self: center;
   align-self: center;
-  grid-area: left;
+  grid-area: top;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
 }
 
 .buttons{
@@ -32,9 +36,10 @@ body {
   justify-content: center;
   align-items: center;
   gap: 5px;
-  margin-top: 40px;
-  grid-area: left;
-  margin-left: 50px;
+  /* margin-top: 40px;
+  /* grid-area: top; */
+  /*margin-left: 50px; */
+  margin-top: 50px;
 }
 
 #again{
@@ -71,10 +76,10 @@ body {
 #score-container {
   font-size: 35px;
   color: rgb(138, 81, 149);
-  display: flex;
+  display:flex;
   justify-content: center;
-  grid-area: left;
-  margin-left: 50px;
+  /* grid-area: left; */
+  /* margin-left: 50px; */
 }
 
 .leaderboard {
@@ -83,7 +88,8 @@ body {
   align-self: center;
   text-align: center;
   font-size: 1.5em;
-  grid-area: right;
+  grid-area: bottom;
+  margin-top: 20px;
 }
 
 #input,#button {
