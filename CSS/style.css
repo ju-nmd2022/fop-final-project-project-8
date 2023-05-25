@@ -1,69 +1,84 @@
 body {
   width: 100%;
+  background-image: url("../indexBackground.png");
+  background-size: cover;
+  background-position: top;
   /* height: 600px; */
-  background-image: linear-gradient(#F98AD8, #cc99ff);
+  /* background-image: linear-gradient(#F98AD8, #cc99ff); */
   /* overflow gör så att man inte kan scrolla */
   overflow: hidden;
 }
 
-header {
+/* header {
   text-align: center;
   font-size: 4em;
   font-family: 'Faster One', cursive;
   color: rgb(19, 0, 48);
   margin-top: -1.3em;
+} */
+
+#title {
+  width: 50%;
+  position: absolute;
+  top: 20px;
+  right: 25%;
+  z-index: 3;
 }
 
-.container {
-  display: grid;
-  height: 100%;
-  width: 100%;
-  grid-template-columns: 1fr 1fr;
+
+  /* margin-top: 200px; */
+  /* display: grid; */
+  /* height: 100%;
+  width: 100%; */
+  /* grid-template-columns: 1fr 1fr;
   grid-template-areas: 
-  "img text";
-}
+  "img text"; */
+
 
 .unicorn-jump {
-  max-width: 100%;
+  position: absolute;
+  left: -60px;
+  bottom: -90px;
+  width: 50%;
   grid-area: img;
-  margin-right: -6em;
-  margin-top: -11em;
-  justify-self: self-end;
   z-index: 2;
 }
 
 .start-text {
+  position: absolute;
+  bottom: 50px;
+  right: 15%;
   color: #0B1355;
-  grid-area: text;
+  /* grid-area: text; */
   background-color: rgb(255, 255, 255);
   z-index: 1;
-  margin-right: 10em;
+  /* margin-right: 10em;
   margin-bottom: 20em;
   margin-top: -2em;
-  margin-left: -2em;
+  margin-left: -2em; */
   justify-self: center;
-  padding: 2em;
-  padding-left: 4em;
-  padding-right: 4em;
+  padding-top: -30px;
+  padding-left: 30px;
+  padding-right: 30px;
   border-radius: 1em;
   border: 0.5em solid #0B1355;
 }
 
 h2 {
   text-align: center;
-  font-size: 3em;
-  margin-top: -0.1em;
+  font-size: 40px;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 li{
-  font-size: 1.8em;
+  font-size: 25px;
   font-family: Arial, sans-serif;
-  padding: 0.3em;
+  padding: 5px;
 }
 
 #play-button {
-  margin-left: 2em;
+  position: relative;
+  left: 150px;
   background-color: #F765A2;
   font-size: 3em;
   padding: 0.3em;
@@ -73,6 +88,7 @@ li{
   border-radius: 0.5em;
   color: white;
   border: transparent;
+  margin-bottom: 20px;
 }
 
 #play-button:hover {
