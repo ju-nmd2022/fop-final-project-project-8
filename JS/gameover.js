@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     scoreElement.innerText = score;
 });
 
+//redirects to game
 function playAgain() {
     localStorage.removeItem("score");
     window.location.href = "game.html";
@@ -20,7 +21,7 @@ window.addEventListener("load", () => {
     displayLeaderboard();
 })
 
-//saves the score on the leader board
+//saves the score on the leaderboard
 function saveScore() {
     //gets the score from localstorage
     let score = localStorage.getItem("score");
@@ -37,20 +38,22 @@ function saveScore() {
         localStorage.result = JSON.stringify([]);
     }
 
-    //adds score to array and saves it
+    //adds score to array
     let scoresArray = JSON.parse(localStorage.result);
     scoresArray.push(result);
-
+    //sort array
     scoresArray.sort(function (a, b) {
         return b.score - a.score;
     });
+    //remove object with index over 10
     if (scoresArray.length > 10) {
         scoresArray = scoresArray.slice(0, 10);
     }
-
+    //save array
     localStorage.result = JSON.stringify(scoresArray);
-
+    //makes input empty after save button press
     inputElement.value = "";
+
     displayLeaderboard();
 }
 
@@ -59,7 +62,6 @@ function displayLeaderboard() {
     if (localStorage.result && localStorage.result !== "[]") {
         let scoresArray = JSON.parse(localStorage.result);
 
-        console.log(scoresArray.length);
         //creates html elements to put info in
         const scoresElement = document.getElementById("names");
         scoresElement.innerText = "";

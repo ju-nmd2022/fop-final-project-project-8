@@ -3,19 +3,9 @@ body {
   background-image: url("../indexBackground.png");
   background-size: cover;
   background-position: top;
-  /* height: 600px; */
-  /* background-image: linear-gradient(#F98AD8, #cc99ff); */
-  /* overflow gör så att man inte kan scrolla */
+  background-repeat: no-repeat;
   overflow: hidden;
 }
-
-/* header {
-  text-align: center;
-  font-size: 4em;
-  font-family: 'Faster One', cursive;
-  color: rgb(19, 0, 48);
-  margin-top: -1.3em;
-} */
 
 #title {
   width: 50%;
@@ -24,16 +14,6 @@ body {
   right: 25%;
   z-index: 3;
 }
-
-
-  /* margin-top: 200px; */
-  /* display: grid; */
-  /* height: 100%;
-  width: 100%; */
-  /* grid-template-columns: 1fr 1fr;
-  grid-template-areas: 
-  "img text"; */
-
 
 .unicorn-jump {
   position: absolute;
@@ -49,13 +29,8 @@ body {
   bottom: 50px;
   right: 15%;
   color: #0B1355;
-  /* grid-area: text; */
   background-color: rgb(255, 255, 255);
   z-index: 1;
-  /* margin-right: 10em;
-  margin-bottom: 20em;
-  margin-top: -2em;
-  margin-left: -2em; */
   justify-self: center;
   padding-top: -30px;
   padding-left: 30px;

@@ -1,4 +1,3 @@
-/* gör så man inte kan markera text */
 *,
 *::before,
 *::after {
@@ -72,7 +71,6 @@ body {
   height: 100vh;
   position: relative;
 }
-
 
 .obstacle {
   background-image: url(/img/bolt.png);

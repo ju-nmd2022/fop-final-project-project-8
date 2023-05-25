@@ -1,8 +1,9 @@
+//character & ground
 let characterStand = document.getElementById("characterStand");
 characterStand.style.display = "block";
 let ground = document.getElementById("ground");
 
-//get properties for character & ground?
+//get properties for character & ground and store in variables
 let characterBottom = parseInt(
   window.getComputedStyle(character).getPropertyValue("bottom")
 );
@@ -29,14 +30,14 @@ let characterLeft = parseInt(
 let displayScore = document.getElementById("score");
 let score = 0;
 
-//variables for jump
+//variables & character for jump
 let isJumping = false;
 let upTime;
 let downTime;
 let characterJump = document.getElementById("characterJump");
 characterJump.style.display = "none";
 
-//variables for duck
+//variables & character for duck
 let isDucking = false;
 let characterDuck = document.getElementById("characterDuck");
 characterDuck.style.display = "none";
@@ -44,11 +45,11 @@ characterDuck.style.display = "none";
 //star
 let star = document.getElementById("star");
 star.style.display = "none";
-
+//character in "starmode"
 let characterStar = document.getElementById("characterStar");
 characterStar.style.display = "none";
 
-//används detta?
+//get window width?
 let winWidth = parseInt(window.innerWidth);
 
 //function to get character to jump
@@ -60,11 +61,9 @@ function jump() {
   //the actual jump
   upTime = setInterval(() => {
     if (characterBottom >= groundHeight + 100) {
-      //whar happends when in air
       clearInterval(upTime);
       downTime = setInterval(() => {
         if (characterBottom <= groundHeight - 70) {
-          //what happens when on ground
           clearInterval(downTime);
           isJumping = false;
           characterStand.style.display = "block";
@@ -80,7 +79,7 @@ function jump() {
   }, 20);
 }
 
-//function to get character back to stand
+//function to get character back to normal stand
 function stand() {
   if (!isJumping) {
   characterStand.style.display = "block";
@@ -113,45 +112,45 @@ function setSpeed() {
     console.log(gameSpeed);
   }, 3000);
 }
+
+//generate the star
 let isIndestructible = false;
 let starActive = false;
 function generateStar() {
   starActive = true;
+  //displays star on random position
   star.style.display = "block";
   star.style.left = Math.floor(Math.random() * 1200) + 50 + "px";
   star.style.top = Math.floor(Math.random() * 350) + 50 + "px";
   characterJump.style.display = "none";
   characterDuck.style.display = "none";
+
   if (starActive === true) {
     document.addEventListener("keydown", function (e) {
       if (e.key === "ArrowLeft" && starActive) {
         rainbow();
-        isIndestructible = true; // Set the character as indestructible
+        isIndestructible = true;
         setTimeout(() => {
-          isIndestructible = false; // Reset the character's destructible state after a certain time (4 seconds in this case)
+          isIndestructible = false;
         }, 4000);
       }
     });
   }
-  
- 
-
+  //makes start disapear after 1 sec
   setTimeout(() => {
     star.style.display = "none";
     starActive = false;
   }, 1000);
-
 }
 
-console.log(starActive);
-
+//displays the rainbow version of character
 function rainbow() {
   isIndestructible = true;
   characterStar.style.display = "block";
   characterStand.style.display = "none";
   characterJump.style.display = "none";
   characterDuck.style.display = "none";
-
+  //back to normal after 4 sec
   setTimeout(() => {
     characterStar.style.display = "none";
     characterStand.style.display = "block";
@@ -159,15 +158,17 @@ function rainbow() {
   }, 4000);
 }
 
-
-
+//generates the obstacles
 function generateObstacle() {
+  //create obstacle element and add class to it
   let obstacles = document.querySelector(".obstacles");
   let obstacle = document.createElement("div");
   obstacle.setAttribute("class", "obstacle");
   obstacles.appendChild(obstacle);
 
-  let randomTimeout = Math.floor(Math.random() * (-80 * (-1 * gameSpeed))+ 1500);
+  //how often obstacles are generated
+  let randomTimeout = Math.floor(Math.random() * (-80 * (-1 * gameSpeed)) + 1500);
+  
   let obstacleRight = -30;
   let obstacleBottom = 50;
   let obstacleWidth = 30;
@@ -193,17 +194,18 @@ function generateObstacle() {
   obstacle.style.width = obstacleWidth + "px";
   obstacle.style.height = obstacleHeight + "px";
 
-  //make image bigger, only rauncloud
+  //make image bigger, only raincloud
   if (obstacleImage === "img/raincloud.png") {
     let scale = 3; // Adjust this value to change the size/scale
     obstacle.style.backgroundSize = `contain`;
     obstacle.style.transform = `scale(${scale})`;
   }
-
+//makes the obstacles move
   function moveObstacle() {
+    //makes them  move to the left
     obstacleRight = obstacleRight + 5;
     obstacle.style.right = obstacleRight + "px";
-
+    //collision for raincloud
     if (obstacleImage === "img/raincloud.png") {
       let raincloudTop = obstacleBottom;
       let raincloudBottom = obstacleBottom + obstacleHeight;
@@ -211,9 +213,8 @@ function generateObstacle() {
       let raincloudRight = obstacleRight;
 
       if (!isDucking && !starActive) {
-        // Check collision only if the character is not ducking
         if (
-          !isIndestructible && // Check if character is destructible
+          !isIndestructible && //check if character is destructible
           characterRight >= raincloudLeft &&
           characterRight <= raincloudRight &&
           characterBottom + characterHeight >= raincloudTop &&
@@ -223,17 +224,18 @@ function generateObstacle() {
           clearInterval(obstacleInterval);
           clearTimeout(obstacleTimeout);
           location.reload();
+          // Save the score in local storage before redirecting
           localStorage.setItem("score", score);
           // Redirect to the gameOver page
           window.location.href = "gameOver.html";
         }
       }
     }
-    
+    //collision for bolt
     if (obstacleImage === "img/bolt.png") {
       if (!starActive) {
         if (
-          !isIndestructible && // Check if character is destructible
+          !isIndestructible && //check if character is destructible
           characterRight >= obstacleRight - obstacleWidth &&
           characterRight <= obstacleRight - 20 &&
           characterBottom <= obstacleBottom + obstacleHeight
@@ -241,18 +243,19 @@ function generateObstacle() {
           clearInterval(obstacleInterval);
           clearTimeout(obstacleTimeout);
           location.reload();
-          // Save the score in local storage before redirecting
+          //save the score in local storage before redirecting
           localStorage.setItem("score", score);
   
-          // Redirect to the gameOver page
+          //redirect to the gameOver page
           window.location.href = "gameOver.html";
         }
 
       }
     }
   }
-
+  //how quickly obstacles move
   let obstacleInterval = setInterval(moveObstacle, gameSpeed);
+  //how often obstacles generates
   let obstacleTimeout = setTimeout(generateObstacle, randomTimeout);
 }
 
@@ -276,14 +279,14 @@ document.addEventListener("keyup", function (e) {
   }
 });
 
-//the function that startes the game
+//the function that starts the game
 function startGame() {
   setSpeed();
   generateObstacle();
   setInterval(showScore, 100);
   setInterval(generateStar, 10000);
 
-// Hide the start screen when the game starts
+  // Hide the start screen when the game starts
   const startScreen = document.querySelector(".start-screen");
   startScreen.style.display = "none";
 }
