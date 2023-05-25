@@ -36,10 +36,17 @@ let downTime;
 let characterJump = document.getElementById("characterJump");
 characterJump.style.display = "none";
 
-//variables for jduck
+//variables for duck
 let isDucking = false;
 let characterDuck = document.getElementById("characterDuck");
 characterDuck.style.display = "none";
+
+//star
+let star = document.getElementById("star");
+star.style.display = "none";
+
+let characterStar = document.getElementById("characterStar");
+characterStar.style.display = "none";
 
 //används detta?
 let winWidth = parseInt(window.innerWidth);
@@ -75,9 +82,11 @@ function jump() {
 
 //function to get character back to stand
 function stand() {
+  if (!isJumping) {
   characterStand.style.display = "block";
   characterDuck.style.display = "none";
-  isDucking = false;
+    isDucking = false;
+  }
 }
 
 //function to get character to duck
@@ -104,6 +113,52 @@ function setSpeed() {
     console.log(gameSpeed);
   }, 3000);
 }
+let isIndestructible = false;
+let starActive = false;
+function generateStar() {
+  starActive = true;
+  star.style.display = "block";
+  star.style.left = Math.floor(Math.random() * 1200) + 50 + "px";
+  star.style.top = Math.floor(Math.random() * 350) + 50 + "px";
+  characterJump.style.display = "none";
+  characterDuck.style.display = "none";
+  if (starActive === true) {
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft" && starActive) {
+        rainbow();
+        isIndestructible = true; // Set the character as indestructible
+        setTimeout(() => {
+          isIndestructible = false; // Reset the character's destructible state after a certain time (4 seconds in this case)
+        }, 4000);
+      }
+    });
+  }
+  
+ 
+
+  setTimeout(() => {
+    star.style.display = "none";
+    starActive = false;
+  }, 1000);
+
+}
+
+console.log(starActive);
+
+function rainbow() {
+  isIndestructible = true;
+  characterStar.style.display = "block";
+  characterStand.style.display = "none";
+  characterJump.style.display = "none";
+  characterDuck.style.display = "none";
+
+  setTimeout(() => {
+    characterStar.style.display = "none";
+    characterStand.style.display = "block";
+    starActive = false;
+  }, 4000);
+}
+
 
 
 function generateObstacle() {
@@ -155,9 +210,10 @@ function generateObstacle() {
       let raincloudLeft = obstacleRight - obstacleWidth;
       let raincloudRight = obstacleRight;
 
-      if (!isDucking) {
+      if (!isDucking && !starActive) {
         // Check collision only if the character is not ducking
         if (
+          !isIndestructible && // Check if character is destructible
           characterRight >= raincloudLeft &&
           characterRight <= raincloudRight &&
           characterBottom + characterHeight >= raincloudTop &&
@@ -175,19 +231,23 @@ function generateObstacle() {
     }
     
     if (obstacleImage === "img/bolt.png") {
-      if (
-        characterRight >= obstacleRight - obstacleWidth &&
-        characterRight <= obstacleRight - 20 &&
-        characterBottom <= obstacleBottom + obstacleHeight
-      ) {
-        clearInterval(obstacleInterval);
-        clearTimeout(obstacleTimeout);
-        location.reload();
-        // Save the score in local storage before redirecting
-        localStorage.setItem("score", score);
+      if (!starActive) {
+        if (
+          !isIndestructible && // Check if character is destructible
+          characterRight >= obstacleRight - obstacleWidth &&
+          characterRight <= obstacleRight - 20 &&
+          characterBottom <= obstacleBottom + obstacleHeight
+        ) {
+          clearInterval(obstacleInterval);
+          clearTimeout(obstacleTimeout);
+          location.reload();
+          // Save the score in local storage before redirecting
+          localStorage.setItem("score", score);
+  
+          // Redirect to the gameOver page
+          window.location.href = "gameOver.html";
+        }
 
-        // Redirect to the gameOver page
-        window.location.href = "gameOver.html";
       }
     }
   }
@@ -198,24 +258,30 @@ function generateObstacle() {
 
 //controls
 document.addEventListener("keydown", function (e) {
-  if (e.key === "ArrowUp") {
+  if (!isIndestructible) {
+    if (e.key === "ArrowUp" ) {
     jump();
   } else if (e.key === "ArrowDown") {
     duck();
   }
-});
-//controls again
-document.addEventListener("keyup", function (e) {
-  if (e.key === "ArrowDown") {
-    stand();
   }
 });
 
-//the function taht startes the game
+//controls again
+document.addEventListener("keyup", function (e) {
+  if (!isIndestructible) {
+    if (e.key === "ArrowDown") {
+      stand();
+    }
+  }
+});
+
+//the function that startes the game
 function startGame() {
   setSpeed();
   generateObstacle();
   setInterval(showScore, 100);
+  setInterval(generateStar, 10000);
 
 // Hide the start screen when the game starts
   const startScreen = document.querySelector(".start-screen");

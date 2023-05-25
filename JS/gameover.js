@@ -40,6 +40,14 @@ function saveScore() {
     //adds score to array and saves it
     let scoresArray = JSON.parse(localStorage.result);
     scoresArray.push(result);
+
+    scoresArray.sort(function (a, b) {
+        return b.score - a.score;
+    });
+    if (scoresArray.length > 10) {
+        scoresArray = scoresArray.slice(0, 10);
+    }
+
     localStorage.result = JSON.stringify(scoresArray);
 
     inputElement.value = "";
@@ -47,12 +55,11 @@ function saveScore() {
 }
 
 function displayLeaderboard() {
-    //is localstorage is not undefined displays the info and sorts it
-    if (localStorage.result !== undefined) {
+    // Check if localStorage.result is defined and not an empty array
+    if (localStorage.result && localStorage.result !== "[]") {
         let scoresArray = JSON.parse(localStorage.result);
-        scoresArray.sort(function (a, b) {
-            return b.score - a.score;
-        })
+
+        console.log(scoresArray.length);
         //creates html elements to put info in
         const scoresElement = document.getElementById("names");
         scoresElement.innerText = "";
