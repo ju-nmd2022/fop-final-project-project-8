@@ -1,0 +1,114 @@
+* {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  user-select: none;
+  margin: 0%;
+}
+
+body {
+  height: 100vh;
+  background-image: linear-gradient(#f98ad8, #cc99ff);
+  overflow: hidden;
+  display: grid;
+}
+
+#headline{
+  margin-left: 50%;
+  margin-right: 50%;
+  margin-top: -10%;
+  width: 50%;
+}
+
+.container {
+  justify-self: center;
+  align-self: center;
+  grid-area: top;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.buttons{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-top: 50px;
+}
+
+#again{
+    border-radius: 20px;
+    padding: 10px 24px;
+    background-color:#ffffff;
+    border: 10px;
+    color: #f98ad8;
+    font-size: 40px;
+    border: 2px solid rgb(138, 81, 149);
+}
+
+#exit{
+  font-size: 20px;
+  background-color:#f98ad8;
+  border-radius: 20px;
+  padding: 10px 10px;
+  border: 2px solid rgb(138, 81, 149);
+  color: #ffffff;
+}
+
+#again:hover{
+  background-color: #1a5ca8;
+  color: white;
+  border-color:#1a5ca8;
+}
+
+#exit:hover{
+  background-color: #1a5ca8;
+  color: white;
+  border-color:#1a5ca8;
+}
+
+#score-container {
+  font-size: 35px;
+  color: rgb(138, 81, 149);
+  display:flex;
+  justify-content: center;
+}
+
+.leaderboard {
+  width: 40%;
+  justify-self: center;
+  align-self: center;
+  text-align: center;
+  font-size: 25px;
+  grid-area: bottom;
+  margin-top: 20px;
+}
+
+#input,#button {
+  margin: 10px;
+  font-size: 20px;
+  border-radius: 10px;
+  padding: 5px;
+  background-color:#ffffff;
+  color: #f98ad8;
+  border: 2px solid rgb(138, 81, 149);
+}
+
+#button:hover{
+  background-color: #1a5ca8;
+  color: white;
+  border-color:#1a5ca8;
+}
+
+#names {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color:white;
+  border-radius: 10px;
+  width: 100%;
+  justify-self: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+span {
+  margin: 20px;
+}

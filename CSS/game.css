@@ -1,0 +1,100 @@
+*,
+*::before,
+*::after {
+  user-select: none;
+  touch-action: none;
+}
+
+* {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-weight: 200;
+  color: #0b1354;
+  overflow: hidden;
+}
+
+body {
+  height: 900px;
+  background-image: linear-gradient(#f98ad8, #cc99ff);
+  overflow: hidden;
+}
+
+.score {
+  position: absolute;
+  font-size: 70px;
+  right: 1vmin;
+  top: 1vmin;
+}
+
+.start-screen {
+  position: absolute;
+  font-size: 5vmin;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hide {
+  display: none;
+}
+
+.ground {
+  bottom: -50px;
+  width: 100%;
+  height: auto;
+  position: absolute;
+  left: -15px;
+  z-index: -1;
+  right: 0;
+}
+
+#character {
+  position: absolute;
+  bottom: 30px;
+  width: 100px;
+  right: calc(100% - 150px);
+  z-index: 1;
+  left: 0;
+}
+
+#characterDuck {
+  margin-bottom: -20px;
+  width: 100px;
+}
+
+#characterStar {
+  width: 135px;
+  margin-left: -18px;
+}
+
+#game {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+}
+
+.obstacle {
+  background-image: url(/img/bolt.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  bottom: 30px;
+  right: 0;
+  position: absolute;
+}
+
+.obstacleTwo {
+  background-image: url(/img/raincloud.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  bottom: 0px;
+  right: 0;
+  position: absolute;
+  background-color: #0b1354;
+}
+
+#star {
+  position: absolute;
+  top: 400px ;
+  width: 100px;
+}

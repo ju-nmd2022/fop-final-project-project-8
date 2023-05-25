@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./CSS/gameOver.css" />
+    <title>Game Over - Score</title>
+  </head>
+  <body>
+    <div class="container">
+      <img id="headline" src="img/gameover.png" />
+      <div id="score-container">
+        <h2>
+          <span id="score-text">Score:</span> <span id="score"></span>
+        </h2>
+      </div>
+
+    <div class="leaderboard">
+      <div>
+        <input id="input" type="text" placeholder="Name...">
+        <button id="button">Save</button>
+      </div>
+      <p>Top 10 Players:</p>
+      <div id="names"></div>
+    </div>
+
+    <div class="buttons">
+      <a href="game.html"
+        ><button id="again" onclick="playAgain()">Play Again!</button></a
+      >
+      <a href="index.html"><button id="exit">Exit</button></a>
+    </div>
+  </div>
+
+      <script src="./JS/gameover.js" defer></script>
+  </body>
+</html>
